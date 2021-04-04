@@ -45,16 +45,20 @@ function dispTeam(j,id) {
 
          var navMobileEl = $('#nav-mobile')
          var aEl = $('<a>').attr('href',trec.strFacebook).text("Facebook")
+         aEl.attr('target', '_blank');
          var liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
 
          aEl = $('<a>').attr('href',trec.strInstagram).text("Instagram")
+         aEl.attr('target', '_blank');
          liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
          aEl = $('<a>').attr('href',trec.strTwitter).text("Twitter")
+         aEl.attr('target', '_blank');
          liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
          aEl = $('<a>').attr('href',trec.strYoutube).text("Youtube")
+         aEl.attr('target', '_blank');
          liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
 
