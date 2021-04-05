@@ -2,7 +2,7 @@
 var teamListEl = $('#team_list');
 var teamContEl = $('.container');
 var teamNameEl = "";
-let teamDB = [];
+let teamDB = [];    var eventDB = [];
 
 function getTeams() {
     var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4387';
@@ -27,37 +27,49 @@ function getParams() {
     var teamIndex = searchParamsArr[0].split('=').pop();
     var teamId = searchParamsArr[1].split('=').pop();
   
-    dispTeam(teamIndex, teamId);
+    dispTeam(teamIndex);
+    getTeamDet(teamId);
   }
-
-function dispTeam(j,id) {
+function getTeamDet(teamid){
+    var reqUrl = "https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id="+teamid;
+    fetch(reqUrl)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+           // console.log("teamDet: ", data);
+            eventDB = data.results;
+            dispTeamEvents(eventDB);
+        });
+}
+function dispTeam(j) {
     
     var trec = teamDB.teams[j]; /// Individual team record
-
+        var httPrefix = "https://";
          console.log(trec);
          /*strWebsite: "www.nba.com/nets" */
          //var logoEl =
           $('#logo').attr('src',trec.strTeamLogo)
-         var brandLogoEl = $('.brand-logo').attr('href', trec.strWebsite).text(trec.strTeam);
+         var brandLogoEl = $('.brand-logo').attr('href', httPrefix+trec.strWebsite).text(trec.strTeam);
         // var brandLogoEl = $('.brand-logo').attr('href', trec.strWebsite).append(logoEl);
          
          //brandLogoEl.append(logoEl);
-
+         
          var navMobileEl = $('#nav-mobile')
-         var aEl = $('<a>').attr('href',trec.strFacebook).text("Facebook")
+         var aEl = $('<a>').attr('href',httPrefix+trec.strFacebook).text("Facebook")
          aEl.attr('target', '_blank');
          var liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
 
-         aEl = $('<a>').attr('href',trec.strInstagram).text("Instagram")
+         aEl = $('<a>').attr('href',httPrefix+trec.strInstagram).text("Instagram")
          aEl.attr('target', '_blank');
          liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
-         aEl = $('<a>').attr('href',trec.strTwitter).text("Twitter")
+         aEl = $('<a>').attr('href',httPrefix+trec.strTwitter).text("Twitter")
          aEl.attr('target', '_blank');
          liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
-         aEl = $('<a>').attr('href',trec.strYoutube).text("Youtube")
+         aEl = $('<a>').attr('href',httPrefix+trec.strYoutube).text("Youtube")
          aEl.attr('target', '_blank');
          liEl = $('<li>').append(aEl);
          navMobileEl.append(liEl);
@@ -88,16 +100,89 @@ function dispTeam(j,id) {
        // teamContEl.append(stadiumEl, stadiumLocEl, stadiumDesc);
         //var stadiumThumbEl = 
         $('#stadium_thumb').attr('src', trec.strStadiumThumb)
-        //teamContEl.append(stadiumThumbEl);
-
-       /*
-       
-      //  nbaTeamEl.append(titleEl);
-        teamListEl.append(teamNameEl);
-*/
     
 }
+function dispTeamEvents(eventDB){
+    var erec;   var tbodyEl = $('#events');
+    var trEl;   var tdEl;
+    for(var i=0; i<eventDB.length; i++){
+        erec = eventDB[i];
+        tdEl = $('<td>').text(erec.dateEvent);
+        trEl = $('<tr>').append(tdEl);
+        tdEl = $('<td>').text(erec.strSeason);
+        trEl.append(tdEl);
+        tdEl = $('<td>').text(erec.strEvent);
+        trEl.append(tdEl);
+        tdEl = $('<td>').text(erec.intHomeScore);
+        trEl.append(tdEl);
+        tdEl = $('<td>').text(erec.intAwayScore);
+        trEl.append(tdEl);
+       // tdEl = $('<td>').text(erec.strEventAlternate);
+        //trEl.append(tdEl);
+        tbodyEl.append(trEl);
+    }
+    /*
+    dateEvent: "2021-03-30"
+dateEventLocal: null
+idAPIfootball: "108890"
+idAwayTeam: "134870"
+idEvent: "1095101"
+idHomeTeam: "134865"
+idLeague: "4387"
+idSoccerXML: null
+intAwayScore: "102"
+intAwayShots: null
+intHomeScore: "116"
+intHomeShots: null
+intRound: "0"
+intSpectators: null
+strAwayFormation: null
+strAwayGoalDetails: null
+strAwayLineupDefense: null
+strAwayLineupForward: null
+strAwayLineupGoalkeeper: null
+strAwayLineupMidfield: null
+strAwayLineupSubstitutes: null
+strAwayRedCards: null
+strAwayTeam: "Chicago Bulls"
+strAwayYellowCards: null
+strBanner: null
+strCity: null
+strCountry: "USA"
+strDescriptionEN: null
+strEvent: "Golden State Warriors vs Chicago Bulls"
+strEventAlternate: "Chicago Bulls @ Golden State Warriors"
+strFanart: null
+strFilename: "NBA 2021-03-30 Golden State Warriors vs Chicago Bulls"
+strHomeFormation: null
+strHomeGoalDetails: null
+strHomeLineupDefense: null
+strHomeLineupForward: null
+strHomeLineupGoalkeeper: null
+strHomeLineupMidfield: null
+strHomeLineupSubstitutes: null
+strHomeRedCards: null
+strHomeTeam: "Golden State Warriors"
+strHomeYellowCards: null
+strLeague: "NBA"
+strLocked: "unlocked"
+strMap: null
+strOfficial: null
+strPoster: null
+strPostponed: "no"
+strResult: null
+strSeason: "2020-2021"
+strSport: "Basketball"
+strSquare: null
+strStatus: "FT"
+strTVStation: null
+strThumb: "https://www.thesportsdb.com/images/media/event/thumb/7khcs71615491508.jpg"
+strTime: "02:00:00"
+strTimeLocal: null
+strTimestamp: "2021-03-30T02:00:00+00:00"
+    */
 
+}
 getTeams();
 /*
 

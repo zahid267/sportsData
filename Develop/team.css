@@ -5,6 +5,9 @@ header nav{
 .nav-wrapper{
     justify-content: space-between;
 }
+p{
+    font-size: 0.5em;
+}
 #city_info{
     display:flex;
     justify-content: space-between;
@@ -12,20 +15,18 @@ header nav{
     padding: 0 10px;
 
 }
-#stadium_thumb{
-    float:left;
+
+#stadium_desc{
+    display: block;
 }
 .containered {
     position: relative;
     text-align: center;
     color: white;
-    margin-bottom: 0;
   }
-/* Centered text */
 .centered {
     position: absolute;
-    top: 80%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin-bottom: 0;
   }

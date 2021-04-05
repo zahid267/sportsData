@@ -1,10 +1,12 @@
 const myListContainer = document.querySelector('.list-group');
 var teamsContainerEl = document.querySelector('#nbaTeams-container');
 var teamSearchTerm = document.querySelector('#nbaTeams-search-term');
-var userInput = document.querySelector('#userInput');
+var userInput = document.querySelector('#nbaTeam');
 var teamListEl = $('#team_list');
 var teamNameEl = "";
 let teamDB = [];
+var teamList = [];
+var teamNames = [];
 
 function getTeams() {
     var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4387';
@@ -35,6 +37,7 @@ function showTeams() {
 
         //var titleEl = document.createElement('span');
       //  titleEl.textContent = teamName;
+      teamList[i] = teamName;
         teamNameEl = $('<li>');
         teamNameEl.attr("data-index", i);
         teamNameEl.attr("data-id", teamid);
@@ -44,15 +47,26 @@ function showTeams() {
         teamListEl.append(teamNameEl);
 
     }
+    teamNames = teamList;
+   // setAutoComplete();
 }
 
 function searchTeams() {
     // event.preventDefault();
   const teamNameSearch = userInput.value
-  console.log("User INput: ", teamNameSearch)
-
-  // loop over DB
-  // team name is db.strTeam (?)
+  var teamIndex = "";
+  for(var i = 0; i< teamList.length; i++){
+    if(teamNameSearch.toLowerCase() === teamList[i].toLowerCase()){
+      teamIndex = i;
+      i = teamList.length+1;
+    }
+  }
+  if(teamIndex != ""){
+    var queryString = './team.html?q=' + teamIndex+"&teamid=";         //searchInputVal + '&format=' + formatInputVal;
+    location.assign(queryString);
+  }else{
+    alert("Team name does not exists in NBA league - "+teamNameSearch);
+  }
 }
 
 teamListEl.on('click', function(event){
@@ -65,5 +79,35 @@ teamListEl.on('click', function(event){
   location.assign(queryString);
   /// Call the teamStats function next
 })
-getTeams();
 
+// Autocomplete widget
+/*
+function setAutoComplete(){
+  $(function () {
+    teamNames = teamList;*/
+    /*[
+      'Bootstrap',
+      'C',
+      'C++',
+      'CSS',
+      'Express.js',
+      'Git',
+      'HTML',
+      'Java',
+      'JavaScript',
+      'jQuery',
+      'JSON',
+      'MySQL',
+      'Node.js',
+      'NoSQL',
+      'PHP',
+      'Python',
+      'React',
+      'Ruby',
+    ];*/
+  /*  $('#nbaTeam').autocomplete({
+      source: teamNames,
+    });
+  });
+}*/
+getTeams();
