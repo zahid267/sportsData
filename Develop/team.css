@@ -8,6 +8,9 @@ header nav{
 p{
     font-size: 0.5em;
 }
+input{
+    font-size: 150%;
+}
 #city_info{
     display:flex;
     justify-content: space-between;

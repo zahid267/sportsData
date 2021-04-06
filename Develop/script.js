@@ -48,7 +48,6 @@ function showTeams() {
 
     }
     teamNames = teamList;
-   // setAutoComplete();
 }
 
 function searchTeams() {
@@ -62,7 +61,10 @@ function searchTeams() {
     }
   }
   if(teamIndex != ""){
-    var queryString = './team.html?q=' + teamIndex+"&teamid=";         //searchInputVal + '&format=' + formatInputVal;
+    var teamRecord = teamDB.teams[teamIndex];
+    var teamRec = JSON.stringify(teamRecord);
+    sessionStorage.setItem("teamRecord", teamRec);
+    var queryString = './team.html';      ///?q=' + teamIndex+"&teamid=";         //searchInputVal + '&format=' + formatInputVal;
     location.assign(queryString);
   }else{
     alert("Team name does not exists in NBA league - "+teamNameSearch);
@@ -72,9 +74,16 @@ function searchTeams() {
 teamListEl.on('click', function(event){
   event.preventDefault();
   var teamIndex = event.target.dataset.index;
-  var teamId = event.target.dataset.id;
+  //var teamId = event.target.dataset.id;
   //console.log(teamIndex + " --- " + teamId);
-  var queryString = './team.html?q=' + teamIndex+"&teamid="+teamId;         //searchInputVal + '&format=' + formatInputVal;
+  //console.log("data : " + teamDB);
+  var teamRecord = teamDB.teams[teamIndex];
+  var teamRec = JSON.stringify(teamRecord);
+  //console.log(teamRec);
+
+  sessionStorage.setItem("teamRecord", teamRec);
+
+  var queryString = './team.html';      ///?q=' + teamIndex+"&teamid="+teamId;         //searchInputVal + '&format=' + formatInputVal;
 
   location.assign(queryString);
   /// Call the teamStats function next
@@ -110,4 +119,5 @@ function setAutoComplete(){
     });
   });
 }*/
+
 getTeams();

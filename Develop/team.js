@@ -3,8 +3,8 @@ var teamListEl = $('#team_list');
 var teamContEl = $('.container');
 var teamNameEl = "";
 let teamDB = [];    var eventDB = [];
-
-function getTeams() {
+var teamId = "";
+function getTeams() {   /// Not used on this page
     var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4387';
 
     fetch(requestUrl)
@@ -21,17 +21,22 @@ function getTeams() {
 }
 function getParams() {
     // Get the search params out of the URL (i.e. `?q=london&format=photo`) and convert it to an array (i.e. ['?q=london', 'format=photo'])
-    var searchParamsArr = document.location.search.split('&');
+  //  var searchParamsArr = document.location.search.split('&');
   
     // Get the team index and teamid values
-    var teamIndex = searchParamsArr[0].split('=').pop();
-    var teamId = searchParamsArr[1].split('=').pop();
-  
-    dispTeam(teamIndex);
+    //var teamIndex = searchParamsArr[0].split('=').pop();
+    //var teamId = searchParamsArr[1].split('=').pop();
+    var teamRec = sessionStorage.getItem("teamRecord");
+   // console.log(teamRec)
+    teamDB = JSON.parse(teamRec);
+    //console.log("after parse : "+ teamDB);
+
+    teamId = teamDB.idTeam;     /// teanDB is individual team record (object)
+    dispTeam();
     getTeamDet(teamId);
   }
-function getTeamDet(teamid){
-    var reqUrl = "https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id="+teamid;
+function getTeamDet(teamId){
+    var reqUrl = "https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id="+teamId;
     fetch(reqUrl)
         .then(function (response) {
             return response.json();
@@ -42,9 +47,9 @@ function getTeamDet(teamid){
             dispTeamEvents(eventDB);
         });
 }
-function dispTeam(j) {
-    
-    var trec = teamDB.teams[j]; /// Individual team record
+function dispTeam() {
+    teamId = teamDB.idTeam;
+    var trec = teamDB; /// Individual team record
         var httPrefix = "https://";
          console.log(trec);
          /*strWebsite: "www.nba.com/nets" */
@@ -121,87 +126,7 @@ function dispTeamEvents(eventDB){
         //trEl.append(tdEl);
         tbodyEl.append(trEl);
     }
-    /*
-    dateEvent: "2021-03-30"
-dateEventLocal: null
-idAPIfootball: "108890"
-idAwayTeam: "134870"
-idEvent: "1095101"
-idHomeTeam: "134865"
-idLeague: "4387"
-idSoccerXML: null
-intAwayScore: "102"
-intAwayShots: null
-intHomeScore: "116"
-intHomeShots: null
-intRound: "0"
-intSpectators: null
-strAwayFormation: null
-strAwayGoalDetails: null
-strAwayLineupDefense: null
-strAwayLineupForward: null
-strAwayLineupGoalkeeper: null
-strAwayLineupMidfield: null
-strAwayLineupSubstitutes: null
-strAwayRedCards: null
-strAwayTeam: "Chicago Bulls"
-strAwayYellowCards: null
-strBanner: null
-strCity: null
-strCountry: "USA"
-strDescriptionEN: null
-strEvent: "Golden State Warriors vs Chicago Bulls"
-strEventAlternate: "Chicago Bulls @ Golden State Warriors"
-strFanart: null
-strFilename: "NBA 2021-03-30 Golden State Warriors vs Chicago Bulls"
-strHomeFormation: null
-strHomeGoalDetails: null
-strHomeLineupDefense: null
-strHomeLineupForward: null
-strHomeLineupGoalkeeper: null
-strHomeLineupMidfield: null
-strHomeLineupSubstitutes: null
-strHomeRedCards: null
-strHomeTeam: "Golden State Warriors"
-strHomeYellowCards: null
-strLeague: "NBA"
-strLocked: "unlocked"
-strMap: null
-strOfficial: null
-strPoster: null
-strPostponed: "no"
-strResult: null
-strSeason: "2020-2021"
-strSport: "Basketball"
-strSquare: null
-strStatus: "FT"
-strTVStation: null
-strThumb: "https://www.thesportsdb.com/images/media/event/thumb/7khcs71615491508.jpg"
-strTime: "02:00:00"
-strTimeLocal: null
-strTimestamp: "2021-03-30T02:00:00+00:00"
-    */
-
 }
-getTeams();
-/*
+//getTeams();       /// Do't to get whole record here. Individual team record is stored in sessionStorage on the index.html page
+getParams();
 
-
-
-strGender: "Male"
-
-strLocked: "unlocked"
-strManager: ""
-strRSS: "http://www.nba.com/nets/rss.xml"
-strSport: "Basketball"
-
-
-strTeamFanart1: "https://www.thesportsdb.com/images/media/team/fanart/xvqqsr1420587418.jpg"
-strTeamFanart2: "https://www.thesportsdb.com/images/media/team/fanart/uywuts1420587649.jpg"
-strTeamFanart3: "https://www.thesportsdb.com/images/media/team/fanart/qvtsur1420587779.jpg"
-strTeamFanart4: "https://www.thesportsdb.com/images/media/team/fanart/vwrrup1421415402.jpg"
-
-strTeamShort: "BKN"
-
-
-*/
