@@ -55,7 +55,8 @@ function dispTeam() {
          /*strWebsite: "www.nba.com/nets" */
          //var logoEl =
           $('#logo').attr('src',trec.strTeamLogo)
-         var brandLogoEl = $('.brand-logo').attr('href', httPrefix+trec.strWebsite).text(trec.strTeam);
+         //var brandLogoEl = 
+         $('.brand-logo').attr('href', httPrefix+trec.strWebsite).text(trec.strTeam);
         // var brandLogoEl = $('.brand-logo').attr('href', trec.strWebsite).append(logoEl);
          
          //brandLogoEl.append(logoEl);

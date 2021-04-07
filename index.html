@@ -29,7 +29,13 @@
                   <span class="card-title">NBA Team</span>
                 </div>
                 <div class="card-content">
-                    <input name="nbaTeam" placeholder="Enter NBA Team" id="nbaTeam" type="text"/>
+                    <!--<input name="nbaTeam" placeholder="Enter NBA Team" id="nbaTeam" type="text"/>-->
+                   
+                    <select name="team_name" id="team_name" class="browser-default" onChange="searchTeams()">
+                      <option value="" disabled selected>Choose a team name</option>
+
+                    </select>
+                   
                     <button type="submit" class="btn" onclick="searchTeams()">Search NBA Teams</button>
                 </div>
               </div>
@@ -42,7 +48,7 @@
                   <span class="card-title">NBA Players</span>
                 </div>
                 <div class="card-content">
-                    <input name="nbaTeam" placeholder="Enter player name" type="text"/>
+                    <input name="nbaTeam123" placeholder="Enter player name" type="text"/>
                     <button type="button" class="btn">Search NBA Players</button>
                 </div>
               </div>
@@ -64,7 +70,7 @@
         <script src="./Develop/script.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+     <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
     </main>
 </body>
 </html>

@@ -1,9 +1,10 @@
 const myListContainer = document.querySelector('.list-group');
 var teamsContainerEl = document.querySelector('#nbaTeams-container');
 var teamSearchTerm = document.querySelector('#nbaTeams-search-term');
-var userInput = document.querySelector('#nbaTeam');
+var userInput = document.querySelector('#team_name');
+var tNameEl = $('#team_name');
 var teamListEl = $('#team_list');
-var teamNameEl = "";
+var teamNameEl = "";  var optionEl = "";
 let teamDB = [];
 var teamList = [];
 var teamNames = [];
@@ -41,13 +42,19 @@ function showTeams() {
         teamNameEl = $('<li>');
         teamNameEl.attr("data-index", i);
         teamNameEl.attr("data-id", teamid);
-       // console.log(teamNameEl)
         teamNameEl.text(teamName);
-      //  nbaTeamEl.append(titleEl);
         teamListEl.append(teamNameEl);
+        //optionEl = $('<option>');
+        //optionEl.prop("value", teamid);
+        //optionEl.text(teamName);
+        //tNameEl.append(optionEl);   /// Team Name dropdown list
+        tNameEl.append('<option value="' + teamName + '">' + teamName + '</option>');
 
     }
+   // alert(tNameEl.innerHTML);
+
     teamNames = teamList;
+    setAutoComplete(teamList)
 }
 
 function searchTeams() {
@@ -90,34 +97,14 @@ teamListEl.on('click', function(event){
 })
 
 // Autocomplete widget
-/*
-function setAutoComplete(){
-  $(function () {
-    teamNames = teamList;*/
-    /*[
-      'Bootstrap',
-      'C',
-      'C++',
-      'CSS',
-      'Express.js',
-      'Git',
-      'HTML',
-      'Java',
-      'JavaScript',
-      'jQuery',
-      'JSON',
-      'MySQL',
-      'Node.js',
-      'NoSQL',
-      'PHP',
-      'Python',
-      'React',
-      'Ruby',
-    ];*/
-  /*  $('#nbaTeam').autocomplete({
-      source: teamNames,
+function setAutoComplete(teamListNames){
+  //$(function () {
+   // teamNames = teamList;
+    
+    $('#nbaTeam').autocomplete({
+      source: teamListNames,
     });
-  });
-}*/
+  //});
+}
 
 getTeams();

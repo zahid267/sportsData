@@ -22,6 +22,7 @@ body {
 }
 
 header {
+    margin-top: 0;
     text-align: center;
 }
 
@@ -73,7 +74,8 @@ p {
 }
 
 .hero {
-    padding: 3% 4%;
+    padding: 1px 5px;
+    
     background-color: var(--dark);
     color: var(--primary);
 }
