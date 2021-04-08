@@ -4,7 +4,6 @@ var teamSearchTerm = document.querySelector('#nbaTeams-search-term');
 var userInput = document.querySelector('#team_name');
 var tNameEl = $('#team_name');
 var teamListEl = $('#team_list');
-var playerTeamEl = $('#player_team');
 var playerNameEl = $('#player_name');
 var playerBtn = $("#playerBtn");
 var teamNameEl = "";  var optionEl = "";
@@ -25,12 +24,12 @@ function getTeams() {
         })
         .then(function (data) {
             teamDB = data;
-            console.log("teamDB: ", teamDB);
+          //  console.log("teamDB: ", teamDB);
             showTeams();
            // getPlayers()
         });
 }
-function getPlayers(){
+function getPlayers(){ /// Not used 
   
   var requestUrl = 'https://www.balldontlie.io/api/v1/players?search=all';
   //var requestUrl = './players.json';
@@ -65,7 +64,7 @@ function showTeams() {
         teamListEl.append(teamNameEl);*/
         
         tNameEl.append('<option value="' + teamName + '">' + teamName + '</option>');
-        playerTeamEl.append('<option value="' + teamName + '">' + teamName + '</option>');
+       // playerTeamEl.append('<option value="' + teamName + '">' + teamName + '</option>');
 
     }
    // alert(teamIdName);
@@ -98,16 +97,18 @@ function searchTeams() {
 }
 playerBtn.on('click', function(event){
   event.preventDefault();
-  if(playerTeamEl.val() == "" || playerTeamEl.val() == ""){
-    alert("Please select the NBA team and enter the player name first.")
+  if(playerNameEl.val() == ""){
+    alert("Please enter the NBA player name first.")
     return false;
   }else{
-    var team = playerTeamEl.val();
+  //  var team = playerTeamEl.val();
     var name = playerNameEl.val();
-    team = team.replaceAll(' ','_');
+//    team = team.replaceAll(' ','_');
     name = name.replaceAll(' ','_');
-  
+    var team = playerNameTeam[name];
+    team = team.replaceAll(' ','_');
     var queryString = './player.html?q=' + team+'&p='+name;         //searchInputVal + '&format=' + formatInputVal;
+  
     location.assign(queryString);
   }
 })

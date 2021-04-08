@@ -64,13 +64,9 @@ function getPlayers(team, player) {   /// Not used on this page
 }
 function getParams() {
     var searchParamsArr = document.location.search.split('&');
-  
-    // Get the team index and teamid values
     var team = searchParamsArr[0].split('=').pop();
     var player = searchParamsArr[1].split('=').pop();
     getPlayers(team, player);
-    
-    //getTeamDet(teamId);
   }
  getParams();
  /*
