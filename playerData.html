@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Data Document</title>
+    <script language="javascript">
+        var players = [];
+        var cnt = 0;
+       // var playerDB = [];
+    function getPlayers(page){
+  //https://www.balldontlie.io/api/v1/players
+    var requestUrl = 'https://www.balldontlie.io/api/v1/players?per_page=100&page='+page;
+        fetch(requestUrl, {
+            // The browser fetches the resource from the remote server without first looking in the cache.
+            // The browser will then update the cache with the downloaded resource.
+            cache: 'reload',
+        })
+            .then(function (response) {
+           // console.log(response)
+                return response.json();
+            })
+            .then(function (data) {
+            // teamDB = data;
+              // console.log("playersDB: ", data);
+                var playerDB = data;
+              showPlayers(playerDB);
+            });
+    }
+    function showPlayers(pdata){
+        for(var i=0; i<pdata.length; i++){
+          //  alert(pdata.data.length)
+          //  for(var i=0; i<5; i++){
+           //     alert(pdata.data[i].first_name + " --- " + pdata.data[i].last_name+" --- "+pdata.data[i].team.full_name);
+            players[cnt] = {
+                "first_name" : pdata.data[i].first_name,
+                "last_name" : pdata.data[i].last_name,
+                "player_team" : pdata.data[i].team.full_name
+                };
+            cnt++;
+            console.log(cnt + " --- " +players[cnt]);
+        }
+    } 
+    /// There are 35 pages 
+    for(var j = 1; j<=35; j++){
+        getPlayers(j);
+      //  console.log(players);
+    } 
+    
+
+    </script>
+</head>
+<body>
+    <h1>Players Data</h1>
+    <script language="javascript">
+        document.write(players);
+    </script>
+</body>
+</html>

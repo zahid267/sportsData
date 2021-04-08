@@ -11,24 +11,30 @@ var playerDB =[];
 
 
 
-function getPlayers() {   /// Not used on this page
+function getPlayers(team, player) {   /// Not used on this page
     // var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/searchplayers.php?t=Atlanta_Hawks&p=Cam_Reddish';
-     var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookupplayer.php?id=34168021';
+     //var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookupplayer.php?id=34168021';
+     var requestUrl = 'https://www.thesportsdb.com/api/v1/json/1/searchplayers.php?t='+team+'&p='+player;
+     console.log(requestUrl);
+
      fetch(requestUrl)
          .then(function (response) {
              return response.json();
          })
          .then(function (data) {
-             //teamDB = data;
              console.log("teamDB: ", data);
-            // getParams();
+             if(data.player == null){
+                 alert("No data available for the given criteria.");
+                 window.history.back();
+                 return false;
+             }
             playerDB = data;
              dispPlayer();
          });
  }
  function dispPlayer() {
-    
-    var trec = playerDB.players[0]; /// Individual team record
+    console.log(playerDB);
+    var trec = playerDB.player[0]; /// Individual team record
         var httPrefix = "https://";
          console.log(trec);
          
@@ -56,7 +62,17 @@ function getPlayers() {   /// Not used on this page
         $('#stadium_thumb').attr('src', trec.strStadiumThumb)
     */
 }
- getPlayers();
+function getParams() {
+    var searchParamsArr = document.location.search.split('&');
+  
+    // Get the team index and teamid values
+    var team = searchParamsArr[0].split('=').pop();
+    var player = searchParamsArr[1].split('=').pop();
+    getPlayers(team, player);
+    
+    //getTeamDet(teamId);
+  }
+ getParams();
  /*
  dateBorn: "1999-09-01"
 
